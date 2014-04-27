@@ -2523,7 +2523,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = 1398592918;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 0;
+        block.nNonce   = 237454;
 
         //// debug print
         block.print();
@@ -2534,8 +2534,8 @@ bool LoadBlockIndex(bool fAllowNew)
 // If genesis block hash does not match, then generate new genesis hash.
 
 
-        assert(block.hashMerkleRoot == uint256("207217664685dff6697cbfb19cc1fc1943dbbcad1d1c1ab6072a9c997e0be693"));
-		if (true && block.GetHash() !== hashGenesisBlock)
+        assert(block.hashMerkleRoot == uint256("0x207217664685dff6697cbfb19cc1fc1943dbbcad1d1c1ab6072a9c997e0be693"));
+		if (true && block.GetHash(46bd8696eb3d9f761432145537d515acf9a6aa90529ce84456bb9997fdc2bb76) !== hashGenesisBlock)
 
         // Start new block file
         unsigned int nFile;
