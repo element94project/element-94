@@ -2534,7 +2534,7 @@ bool LoadBlockIndex(bool fAllowNew)
 // If genesis block hash does not match, then generate new genesis hash.
 
 
-        assert(block.hashMerkleRoot == uint256("0xce158ed8aac7a6d042980b49421ea6af8784f403e203a476103cd72e898c44a8"));
+        assert(block.hashMerkleRoot == uint256("207217664685dff6697cbfb19cc1fc1943dbbcad1d1c1ab6072a9c997e0be693"));
 		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
 
         // Start new block file
