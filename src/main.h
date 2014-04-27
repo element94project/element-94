@@ -33,11 +33,11 @@ static const unsigned int MAX_TX_COMMENT_LEN = 140; // Element-94: 128 bytes + l
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64 MIN_TX_FEE = 1 * CENT;
 static const int64 MIN_RELAY_TX_FEE = 0.1 * CENT;
-static const int64 MAX_MONEY = 10000000 * COIN;
+static const int64 MAX_MONEY = 8000000 * COIN;
 static const int64 PREMINE = 300000 * COIN; // 3% Premine for promotion of coin
-static const int64 MAX_MINT_PROOF_OF_WORK = 7 * COIN;
-static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 7 * COIN;
-static const int64 MAX_MINT_PROOF_OF_STAKE = 0.50 * MAX_MINT_PROOF_OF_WORK;	// 50% annual interest
+static const int64 MAX_MINT_PROOF_OF_WORK = 10 * COIN;
+static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 10 * COIN;
+static const int64 MAX_MINT_PROOF_OF_STAKE = 1.00 * MAX_MINT_PROOF_OF_WORK;	// 50% annual interest
 
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 
@@ -608,7 +608,7 @@ public:
     {
         // Large (in bytes) low-priority (new, small-coin) transactions
         // need a fee.
-        return dPriority > COIN * 720 / 250;
+        return dPriority > COIN * 200000 / 250;
     }
 
     int64 GetMinFee(unsigned int nBlockSize=1, bool fAllowFree=false, enum GetMinFee_mode mode=GMF_BLOCK, unsigned int nBytes = 0) const;

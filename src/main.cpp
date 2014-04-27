@@ -42,11 +42,11 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 5;	// minimum age for coin age: 5d
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 15;	// stake age of full weight: 15d
-unsigned int nStakeTargetSpacing = 120;			// 2-minute block spacing
+unsigned int nStakeMinAge = 60 * 60 * 24 * 1;	// minimum age for coin age: 5d
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 5;	// stake age of full weight: 15d
+unsigned int nStakeTargetSpacing = 30;			// 2-minute block spacing
 
-int64 nChainStartTime = 1396221774;
+int64 nChainStartTime = 1398590821;
 int nCoinbaseMaturity = 30;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -943,7 +943,7 @@ int generateMTRandom(unsigned int s, int range)
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
-	int64 nSubsidy = 7 * COIN;
+	int64 nSubsidy = 10 * COIN;
 
 	std::string cseed_str = prevHash.ToString().substr(7,7);
 	const char* cseed = cseed_str.c_str();
@@ -967,7 +967,7 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 	}
 
 	// Subsidy is cut in half every 64,800 blocks, which will occur approximately every 3 months
-	nSubsidy >>= (nHeight / 64800); 
+	nSubsidy >>= (nHeight / 1000000); 
 
     return nSubsidy + nFees;
 }
@@ -2521,7 +2521,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1396221774;
+        block.nTime    = 1398592918;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = 237454;
 
