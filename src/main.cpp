@@ -2519,10 +2519,10 @@ bool LoadBlockIndex(bool fAllowNew)
         CBlock block;
         block.vtx.push_back(txNew);
         block.hashPrevBlock = 0;
-        block.hashMerkleRoot = block.BuildMerkleTree();
+        block.hashMerkleRoot = block.BuildMerkleTree(2072176646);
         block.nVersion = 1;
         block.nTime    = 1398592918;
-        block.nBits    = bnProofOfWorkLimit.GetCompact();
+        block.nBits    = bnProofOfWorkLimit.GetCompact(1e0fffff);
         block.nNonce   = 237454;
 
         //// debug print
