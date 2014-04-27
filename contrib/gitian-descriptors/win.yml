@@ -1,0 +1,73 @@
+---
+name: "litecoin"
+suites:
+- "precise"
+architectures:
+- "amd64"
+packages:
+- "mingw-w64"
+- "g++-mingw-w64"
+- "git-core"
+- "unzip"
+- "nsis"
+- "faketime"
+- "upx"
+- "vim-nox"
+reference_datetime: "2011-01-30 00:00:00"
+remotes:
+- "url": "https://github.com/Element-94/Element-94.git"
+  "dir": "E-94"
+files:
+- "qt-win32-4.8.3-gitian-r4.zip"
+- "boost-win32-1.55.0-gitian-r6.zip"
+- "bitcoin-deps-win32-gitian-r9.zip"
+script: |
+  #
+  STAGING=$HOME/staging
+  HOST=i686-w64-mingw32
+  #
+  mkdir -p $STAGING
+  cd $STAGING
+  #unzip -o ../build/E-94.zip
+  unzip ../build/qt-win32-4.8.3-gitian-r4.zip
+  unzip ../build/boost-win32-1.55.0-gitian-r6.zip
+  unzip ../build/bitcoin-deps-win32-gitian-r9.zip
+  cd $HOME/build/
+  #
+  cd E-94
+  export PATH=$STAGING/host/bin:$PATH
+  mkdir -p $OUTDIR/src
+  git archive HEAD | tar -x -C $OUTDIR/src
+  #cp -r $STAGING/E-94/* $OUTDIR/src
+  #cp -r $STAGING/E-94/* $HOME/build/E-94
+  cp $OUTDIR/src/doc/README_windows.txt $OUTDIR/readme.txt
+  cp $OUTDIR/src/COPYING $OUTDIR/COPYING.txt
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export FAKETIME=$REFERENCE_DATETIME
+  export TZ=UTC
+  ln -s $STAGING $HOME/qt
+  $HOME/staging/host/bin/qmake -spec unsupported/win32-g++-cross MINIUPNPC_LIB_PATH=$STAGING MINIUPNPC_INCLUDE_PATH=$STAGING BDB_LIB_PATH=$STAGING BDB_INCLUDE_PATH=$STAGING BOOST_LIB_PATH=$STAGING BOOST_INCLUDE_PATH=$STAGING BOOST_LIB_SUFFIX=-mt-s BOOST_THREAD_LIB_SUFFIX=_win32-mt-s OPENSSL_LIB_PATH=$STAGING OPENSSL_INCLUDE_PATH=$STAGING QRENCODE_LIB_PATH=$STAGING QRENCODE_INCLUDE_PATH=$STAGING USE_QRCODE=1 INCLUDEPATH=$STAGING DEFINES=BOOST_THREAD_USE_LIB BITCOIN_NEED_QT_PLUGINS=1 QMAKE_LRELEASE=lrelease QMAKE_CXXFLAGS=-frandom-seed=litecoin USE_BUILD_INFO=1 USE_SSE2=1
+  make $MAKEOPTS
+  $HOST-strip release/Element-94-qt.exe
+  upx --lzma release/Element-94-qt.exe
+  cp release/Element-94-qt.exe $OUTDIR/
+  #
+  cd src
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export FAKETIME=$REFERENCE_DATETIME
+  export TZ=UTC
+  make -f makefile.linux-mingw $MAKEOPTS DEPSDIR=$STAGING Element-94d.exe USE_UPNP=0 DEBUGFLAGS="-frandom-seed=litecoin" USE_SSE2=1 USE_LEVELDB=1
+  $HOST-strip Element-94d.exe
+  upx --lzma Element-94d.exe
+  mkdir $OUTDIR/daemon
+  cp Element-94d.exe $OUTDIR/daemon
+  VERSION=`cat version.h | grep -E ".*DISPLAY_VERSION_[^ ]+[ ]+" | sed 's/.*[ ]\+//g' | sed ':a;N;$!ba;s/\n/./g'`
+  cd ..
+  mkdir nsis
+  git archive HEAD | tar -x -C nsis
+  cd nsis/src
+  mkdir ../release
+  cp ../../release/* ../release/
+  cp ../../src/*.exe .
+  sed -e "s#{{VER}}#${VERSION}#g" ../share/setup.nsi > ../share/setup-final.nsi
+  makensis ../share/setup-final.nsi
