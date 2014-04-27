@@ -2518,7 +2518,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
         CBlock block;
         block.vtx.push_back(txNew);
-        block.hashPrevBlock = 0;
+        block.hashPrevBlock = 00;
         block.hashMerkleRoot = block.BuildMerkleTree(2072176646);
         block.nVersion = 1;
         block.nTime    = 1398592918;
@@ -2535,7 +2535,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
 
         assert(block.hashMerkleRoot == uint256("0x207217664685dff6697cbfb19cc1fc1943dbbcad1d1c1ab6072a9c997e0be693"));
-		if (true && block.GetHash(46) !== hashGenesisBlock)
+		assert(block.GetHash(46) == (!fTestNet ? hashGenesisBlock : ));
 
         // Start new block file
         unsigned int nFile;
