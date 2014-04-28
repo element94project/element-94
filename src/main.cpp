@@ -2521,11 +2521,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-<<<<<<< HEAD
         block.nTime    = 1398674136;
-=======
-        block.nTime    = 1398665889;
->>>>>>> FETCH_HEAD
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = 0;
 
@@ -2538,8 +2534,8 @@ bool LoadBlockIndex(bool fAllowNew)
 // If genesis block hash does not match, then generate new genesis hash.
 
 
-        assert(block.hashMerkleRoot == uint256("0x207217664685dff6697cbfb19cc1fc1943dbbcad1d1c1ab6072a9c997e0be693"));
-		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : ));
+        assert(block.hashMerkleRoot == uint256("0x"));
+		if (true && block.GetHash() != hashGenesisBlock)
 
         // Start new block file
         unsigned int nFile;
