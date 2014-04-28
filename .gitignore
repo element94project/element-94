@@ -2,3 +2,7 @@
 README.md
 
 src/main.cpp
+
+src/qt/locale/bitcoin_sv.qm
+
+*.qm
