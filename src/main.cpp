@@ -2532,13 +2532,10 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nTime = %u \n", block.nTime);
         printf("block.nNonce = %u \n", block.nNonce);
 // If genesis block hash does not match, then generate new genesis hash.
-
-
-        assert(block.hashMerkleRoot == uint256("0x"));
+ assert(block.hashMerkleRoot == uint256("0x"));
 		if (true && block.GetHash() != hashGenesisBlock)
 
-        // Start new block file
-        unsigned int nFile;
+       unsigned int nFile;
         unsigned int nBlockPos;
         if (!block.WriteToDisk(nFile, nBlockPos))
             return error("LoadBlockIndex() : writing genesis block to disk failed");
@@ -2549,6 +2546,9 @@ bool LoadBlockIndex(bool fAllowNew)
         if (!Checkpoints::WriteSyncCheckpoint((!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet)))
             return error("LoadBlockIndex() : failed to init sync checkpoint");
     }
+
+        // Start new block file
+        
 
     string strPubKey = "";
 
