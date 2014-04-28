@@ -2533,7 +2533,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
 // If genesis block hash does not match, then generate new genesis hash.
  assert(block.hashMerkleRoot == uint256("0xce158ed8aac7a6d042980b49421ea6af8784f403e203a476103cd72e898c44a8"));
-		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
+		if (true && block.GetHash() != hashGenesisBlock)
        
        
        unsigned int nFile;
